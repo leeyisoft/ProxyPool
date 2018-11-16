@@ -23,7 +23,7 @@ class Crawler(object, metaclass=ProxyMetaclass):
             print('成功获取到代理', proxy)
             proxies.append(proxy)
         return proxies
-        
+
     # def crawl_daxiang(self):
     #     url = 'http://vtp.daxiangdaili.com/ip/?tid=559363191592228&num=50&filter=on'
     #     html = get_page(url)
@@ -31,7 +31,7 @@ class Crawler(object, metaclass=ProxyMetaclass):
     #         urls = html.split('\n')
     #         for url in urls:
     #             yield url
-          
+
     def crawl_daili66(self, page_count=4):
         """
         获取代理66
@@ -72,7 +72,7 @@ class Crawler(object, metaclass=ProxyMetaclass):
         获取Goubanjia
         :return: 代理
         """
-        start_url = 'http://www.goubanjia.com/free/gngn/index.shtml'
+        start_url = 'http://www.goubanjia.com/'
         html = get_page(start_url)
         if html:
             doc = pq(html)
@@ -121,7 +121,7 @@ class Crawler(object, metaclass=ProxyMetaclass):
             start_url = 'https://premproxy.com/proxy-by-country/{}.htm'.format(i)
             html = get_page(start_url)
             if html:
-                ip_address = re.compile('<td data-label="IP:port ">(.*?)</td>') 
+                ip_address = re.compile('<td data-label="IP:port ">(.*?)</td>')
                 re_ip_address = ip_address.findall(html)
                 for address_port in re_ip_address:
                     yield address_port.replace(' ','')
@@ -133,18 +133,18 @@ class Crawler(object, metaclass=ProxyMetaclass):
             if html:
                 ip_address1 = re.compile("title='View this Proxy details'>\s*(.*).*")
                 re_ip_address1 = ip_address1.findall(html)
-                ip_address2 = re.compile("title='Select proxies with port number .*'>(.*)</a>") 
+                ip_address2 = re.compile("title='Select proxies with port number .*'>(.*)</a>")
                 re_ip_address2 = ip_address2.findall(html)
                 for address,port in zip(re_ip_address1,re_ip_address2):
                     address_port = address+':'+port
                     yield address_port.replace(' ','')
-    
+
     def crawl_kuaidaili(self):
         for i in range(1, 4):
             start_url = 'http://www.kuaidaili.com/free/inha/{}/'.format(i)
             html = get_page(start_url)
             if html:
-                ip_address = re.compile('<td data-title="IP">(.*?)</td>') 
+                ip_address = re.compile('<td data-title="IP">(.*?)</td>')
                 re_ip_address = ip_address.findall(html)
                 port = re.compile('<td data-title="PORT">(.*?)</td>')
                 re_port = port.findall(html)
@@ -167,14 +167,14 @@ class Crawler(object, metaclass=ProxyMetaclass):
                 find_trs = re.compile('<tr class.*?>(.*?)</tr>', re.S)
                 trs = find_trs.findall(html)
                 for tr in trs:
-                    find_ip = re.compile('<td>(\d+\.\d+\.\d+\.\d+)</td>') 
+                    find_ip = re.compile('<td>(\d+\.\d+\.\d+\.\d+)</td>')
                     re_ip_address = find_ip.findall(tr)
                     find_port = re.compile('<td>(\d+)</td>')
                     re_port = find_port.findall(tr)
                     for address,port in zip(re_ip_address, re_port):
                         address_port = address+':'+port
                         yield address_port.replace(' ','')
-    
+
     def crawl_ip3366(self):
         for i in range(1, 4):
             start_url = 'http://www.ip3366.net/?stype=1&page={}'.format(i)
@@ -190,7 +190,7 @@ class Crawler(object, metaclass=ProxyMetaclass):
                     for address,port in zip(re_ip_address, re_port):
                         address_port = address+':'+port
                         yield address_port.replace(' ','')
-    
+
     def crawl_iphai(self):
         start_url = 'http://www.iphai.com/'
         html = get_page(start_url)
@@ -238,4 +238,3 @@ class Crawler(object, metaclass=ProxyMetaclass):
                 yield result.replace(' ', '')
 
 
-            
