@@ -18,11 +18,19 @@ def long2ip(long):
         yushu=res[1]
     return '.'.join(floor_list)
 
-url = ''
+url = 'http://d.jghttp.golangapi.com/getip?num=100&type=1&pro=&city=0&yys=0&port=11&pack=2345&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=0&regions='
 response = requests.get(url)
 li = response.text.split('\r\n')
 for proxy in li:
-    (ip,port)=proxy.split(':')
+    if not proxy:
+        continue
+    (ip,port) = proxy.split(':')
     proxy = '%s:%s' % (long2ip(int(ip)), port)
     print(proxy)
+    set_proxy(proxy)
+
+
+for proxy in li:
+    if not proxy:
+        continue
     set_proxy(proxy)

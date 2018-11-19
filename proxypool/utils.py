@@ -1,3 +1,4 @@
+import hashlib
 import requests
 from requests.exceptions import ConnectionError
 
@@ -7,6 +8,8 @@ base_headers = {
     'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7'
 }
 
+def md5(content):
+    return hashlib.md5(content.encode('utf-8')).hexdigest()
 
 def get_page(url, options={}):
     """
