@@ -4,3 +4,4 @@
 venv
 /.idea
 py3
+*.log
